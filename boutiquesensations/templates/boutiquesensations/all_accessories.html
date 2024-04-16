@@ -1,0 +1,97 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>Boutiquesensations</title>
+</head>
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .card-price {
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        background: #f8f9fa;
+    }
+</style>
+<body>
+    
+    <div class="container">
+        <div class="text-center ">
+            <img src="{% static 'boutiquesensations/logo.jpeg' %}" alt="Logo" class="img-fluid rounded  " style=" max-height: 200px; min-height: 200px;">
+        </div>
+        <h1 class="text-center my-4">Boutiquesensations</h1>
+
+        <form method="get" class="mb-4">
+            <div class="form-group">
+                <label for="type">Type:</label>
+                <input type="text" id="type" name="type" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="price">Max price:</label>
+                <input type="number" id="price" name="price" class="form-control">
+            </div>
+            <input type="submit" value="Search" class="btn btn-primary">
+        </form>
+
+        <div class="row">
+            {% for accessory in accessories %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ accessory.name }}</h5>
+                            <hr>
+                            {% if accessory.image %}
+                            <div class="d-flex justify-content-center">
+                                <img src="{{ accessory.image.url }}" alt="{{ accessory.name }}" class="img-fluid rounded" style="max-height: 200px; min-height: 200px;">
+                            </div>
+                            {% endif %}
+                            <div style="max-height: 100px; overflow-y: auto;">
+                                <p class="card-text">{{ accessory.description }}</p>
+                            </div>
+                            <hr>
+                            <p class="card-price"><strong>Precio: {{ accessory.price|default:"" }} COP</strong></p>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if accessories.has_previous %}
+                    <a href="?page=1" class="btn btn-light">first</a>
+                    <a href="?page={{ accessories.previous_page_number }}" class="btn btn-light">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ accessories.number }} of {{ accessories.paginator.num_pages }}.
+                </span>
+
+                {% if accessories.has_next %}
+                    <a href="?page={{ accessories.next_page_number }}">next</a>
+                    <a href="?page={{ accessories.paginator.num_pages }}">last</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
