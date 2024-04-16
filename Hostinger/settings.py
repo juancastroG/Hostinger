@@ -48,7 +48,7 @@ LOGGING = {
 SECRET_KEY = 'django-insecure-lo7x7-mge(nd7jf7a$7ukd9n6*5*lnsx81jr_c9!m998!yh4ej'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['boutiquesensations.com', 'www.boutiquesensations.com', 'localhost', '31.220.17.121','127.0.0.1']
 
